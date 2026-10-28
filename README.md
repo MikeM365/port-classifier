@@ -1,6 +1,6 @@
 # Port Classifier
 
-A simple command-line Python utility to classify a port number as "secure" or "not secure" based on standard networking conventions.
+A simple command-line Python utility to classify a port number as "privileged" or "unprivileged" based on standard networking conventions.
 
 ## How It Works
 
@@ -9,7 +9,9 @@ This tool operates on a simple and widely recognized principle in networking:
 -   **Ports 0-1023** are known as "Well-Known Ports" or "Privileged Ports." They are reserved for standard services (like HTTP on port 80, or SSH on port 22) and typically require special administrative permissions to be used by an application.
 -   **Ports 1024 and above** are "Registered" or "Dynamic" ports, which are generally available for any application to use.
 
-This script classifies any port greater than 1024 as "secure" (i.e., not a privileged port) and any port 1024 or below as "not secure." **All analysis is done locally; no network connection is made.**
+This script classifies any port 1024 or below as "privileged" and any port above 1024 as "unprivileged." **All analysis is done locally; no network connection is made.**
+
+Note: privileged vs. unprivileged is a statement about which ports require elevated permissions to bind to, not a judgment about whether a given port or service is actually secure — an unprivileged port can still run an insecure service.
 
 ## Features
 
@@ -26,13 +28,15 @@ The script is pre-configured to check a list of common ports. To run it:
 2.  Navigate to the `port-classifier` directory.
 3.  Run the script from your terminal:
     ```bash
-    python port_checker.py
+    python port_classifier.py
     ```
 
 **Sample Output:**
---- Running Port Security Classification ---
-Port 1025 is secure
-Port 80 is not secure
-Port 443 is not secure
-Port 22 is not secure
+```
+--- Running Port Privilege Classification ---
+Port 1025 is unprivileged (boolean value: False)
+Port 80 is privileged (boolean value: True)
+Port 443 is privileged (boolean value: True)
+Port 22 is privileged (boolean value: True)
 ...
+```
